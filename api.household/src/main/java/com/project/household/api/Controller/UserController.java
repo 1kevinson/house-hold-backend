@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.UserNotFoundExeption;
+import com.project.household.api.Exception.UserNotFoundException;
 import com.project.household.api.Repositiory.UserRepository;
 
 @RestController
@@ -32,7 +32,7 @@ public class UserController {
 	// Get one user
 	@GetMapping("/users/{id}")
 	public User getOneUser(@PathVariable Integer id) {
-		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundExeption(id));
+		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	}
 
 	// Add a new user

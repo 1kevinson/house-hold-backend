@@ -1,8 +1,8 @@
 package com.project.household.api.Exception;
 
 @SuppressWarnings("serial")
-public class UserNotFoundExeption extends RuntimeException {
-	public UserNotFoundExeption(Integer id) {
+public class UserNotFoundException extends RuntimeException {
+	public UserNotFoundException(Integer id) {
 		super("Could not find User with Id : " + id);
 	}
 }

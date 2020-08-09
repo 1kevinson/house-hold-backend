@@ -17,7 +17,7 @@ public abstract class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -45,7 +45,7 @@ public abstract class User {
 		this.lastName = parts[1];
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -65,7 +65,7 @@ public abstract class User {
 		return email;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,5 +1,6 @@
 package com.project.household.api.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,10 @@ import com.project.household.api.Repositiory.UserRepository;
 @RequestMapping("/api")
 public class UserController {
 
-	private final UserRepository userRepository = null;
+	@Autowired
+	private UserRepository userRepository;
 
-	@PostMapping(path = "/add")
+	@PostMapping("/add")
 	public String addNewUser(@RequestParam String name, @RequestParam String email) {
 		User n = new User();
 		n.setName(name);
@@ -24,7 +26,7 @@ public class UserController {
 		return "Saved";
 	}
 
-	@GetMapping(path = "/all")
+	@GetMapping("/users")
 	public Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}

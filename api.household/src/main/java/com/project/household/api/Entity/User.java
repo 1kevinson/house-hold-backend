@@ -17,14 +17,16 @@ public class User {
 	private Long id;
 	private String firstName;
 	private String lastName;
-	private UserRole role;
+	private String role;
 	private String email;
 	private String password;
 
+	// Default constructor
 	public User() {
 	}
 
-	public User(String firstName, String lastName, UserRole role, String email, String password) {
+	// Parameters constructor
+	public User(String firstName, String lastName, String role, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
@@ -54,7 +56,7 @@ public class User {
 		return this.lastName;
 	}
 
-	public UserRole getRole() {
+	public String getRole() {
 		return this.role;
 	}
 
@@ -79,7 +81,7 @@ public class User {
 	}
 
 	public void setRole(UserRole role) {
-		this.role = role;
+		this.role = role.getEnumString();
 	}
 
 	public void setPassword(String password) {
@@ -93,7 +95,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "Employee{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
-				+ '\'' + ", role='" + this.role + ", email='" + this.email + ", password='" + this.password + '\''
+				+ '\'' + ", role='" + this.role + '\'' +  ", email='" + this.email + '\'' +  ", password='" + this.password + '\''
 				+ '}';
 	}
 

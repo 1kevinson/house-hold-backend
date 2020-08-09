@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.household.api.Entity.Tenant;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Repositiory.UserRepository;
 
@@ -19,7 +20,7 @@ public class UserController {
 
 	@PostMapping("/add")
 	public String addNewUser(@RequestParam String name, @RequestParam String email) {
-		User n = new User();
+		Tenant n = new Tenant();
 		n.setName(name);
 		n.setEmail(email);
 		userRepository.save(n);

@@ -1,11 +1,11 @@
 package com.project.household.api.Enumeration;
 
-public enum UserRole {
-	ADMIN("ADMIN"), TENANT("TENANT"), OWNER("OWNER");
+public enum TenantStatus {
+	ACTIVE("ACTIVE"), INACTIVE("INACTIVE"), DEACTIVATED("DEACTIVATED");
 
 	private final String enumString;
 
-	UserRole(String string) {
+	TenantStatus(String string) {
 		this.enumString = string;
 	}
 

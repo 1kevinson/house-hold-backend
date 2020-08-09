@@ -14,15 +14,17 @@ import com.project.household.api.Repositiory.UserRepository;
 @Configuration
 class LoadDatabase {
 
-  private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+	private PasswordEncoderGenerator passGen = new PasswordEncoderGenerator();
 
-  @Bean
-  CommandLineRunner initDatabase(UserRepository repository) {
-
-    return args -> {
-      log.info("Preloading... " + repository.save(new Tenant("Arsene", "Kevin","kevin@you.fr","pass_bizarre")));
-      log.info("Preloading... " + repository.save(new Owner("Natacha", "Sama","natsama@yahoo.fr","pass_natou")));
-      log.info("Preloading... " + repository.save(new Admin()));
-    };
-  }
+	@Bean
+	CommandLineRunner initDatabase(UserRepository repository) {
+		return args -> {
+			log.info("Preloading... " + repository
+					.save(new Tenant("Arsene", "Kevin", "kevin@you.fr", passGen.encodePassword("pass_bizarre"))));
+			log.info(
+					"Preloading... " + repository.save(new Owner("Natacha", "Sama", "natsama@yahoo.fr", passGen.encodePassword("pass_natou"))));
+			log.info("Preloading... " + repository.save(new Admin()));
+		};
+	}
 }

@@ -1,8 +1,15 @@
 package com.project.household.api.Controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+//Always imports those two for generated HATEAOS links
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.household.api.Configuration.UserModelAssembler;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Exception.UserNotFoundException;
 import com.project.household.api.Repositiory.UserRepository;
@@ -22,17 +30,24 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserModelAssembler userModelAssembler;
 
 	// Get all users
 	@GetMapping("/users")
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
+	public CollectionModel<EntityModel<User>> getAllUsers() {
+		List<EntityModel<User>> employees = userRepository.findAll().stream() //
+				.map(userModelAssembler::toModel) //
+				.collect(Collectors.toList());
+
+		return CollectionModel.of(employees, linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
 	}
 
 	// Get one user
 	@GetMapping("/users/{id}")
-	public User getOneUser(@PathVariable Integer id) {
-		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+	public EntityModel<User> getOneUser(@PathVariable Integer id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		return userModelAssembler.toModel(user);
 	}
 
 	// Add a new user

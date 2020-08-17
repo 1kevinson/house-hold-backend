@@ -1,5 +1,7 @@
 package com.project.household.api.Entity;
 
+import java.util.Set;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,21 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
-@Table(name = "users")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="user_type")
+@Table(name = "USERS")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Tenant.class, name = "tenant"),
-    @JsonSubTypes.Type(value = Owner.class, name = "owner"),
-    @JsonSubTypes.Type(value = Admin.class, name = "admin")
-})
+@JsonSubTypes({ @JsonSubTypes.Type(value = Tenant.class, name = "tenant"),
+		@JsonSubTypes.Type(value = Owner.class, name = "owner"),
+		@JsonSubTypes.Type(value = Admin.class, name = "admin") })
 public abstract class User {
 
 	@Id
@@ -31,6 +32,9 @@ public abstract class User {
 	private String lastName;
 	private String email;
 	private String password;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Request> requests;
 
 	// Default constructor
 	public User() {
@@ -97,8 +101,7 @@ public abstract class User {
 	@Override
 	public String toString() {
 		return "Employee{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
-				+ '\'' +  ", email='" + this.email + '\'' +  ", password='" + this.password + '\''
-				+ '}';
+				+ '\'' + ", email='" + this.email + '\'' + ", password='" + this.password + '\'' + '}';
 	}
 
 }

@@ -38,11 +38,11 @@ public class UserController {
 	// Get all users
 	@GetMapping("/users")
 	public CollectionModel<EntityModel<User>> getAllUsers() {
-		List<EntityModel<User>> employees = userRepository.findAll().stream() //
+		List<EntityModel<User>> users = userRepository.findAll().stream() //
 				.map(userModelAssembler::toModel) //
 				.collect(Collectors.toList());
 		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating collections. It, too, also lets you include links. 
-		return CollectionModel.of(employees, linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
+		return CollectionModel.of(users, linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
 	}
 
 	// Get one user

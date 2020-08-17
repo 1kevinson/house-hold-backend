@@ -58,9 +58,12 @@ public class RequestController {
 
 	// Get all user requests
 	@GetMapping("/requests/users/{id}")
-	public EntityModel<List<Request>> getUserRequests(@PathVariable Integer id) {
-		List<Request> request = requestRepository.fetchUserRequests(id);
-		return requestModelAssembler.toListModel(request, id);
+	public CollectionModel<EntityModel<Request>> getUserRequests(@PathVariable Integer id) {
+		List<EntityModel<Request>>  requests = requestRepository.fetchUserRequests(id).stream() //
+				.map(requestModelAssembler::toModel) //
+				.collect(Collectors.toList());
+		
+		return CollectionModel.of(requests, linkTo(methodOn(RequestController.class).getUserRequests(id)).withSelfRel());
 	}
 
 	// Add a new request

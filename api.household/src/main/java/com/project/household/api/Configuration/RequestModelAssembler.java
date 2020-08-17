@@ -3,8 +3,6 @@ package com.project.household.api.Configuration;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
-
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -22,8 +20,4 @@ public class RequestModelAssembler implements RepresentationModelAssembler<Reque
 				linkTo(methodOn(RequestController.class).getAllRequests()).withRel("requests"));
 	}
 
-	public EntityModel<List<Request>> toListModel(List<Request> request, Integer userId) {
-		return EntityModel.of(request, //
-				linkTo(methodOn(RequestController.class).getUserRequests(userId)).withRel("userRequests"));
-	}
 }

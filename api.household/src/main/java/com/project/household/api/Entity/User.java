@@ -36,6 +36,10 @@ public abstract class User {
 	@OneToMany(mappedBy = "user")
 	private Set<Request> requests;
 
+	public Set<Request> getRequests() {
+		return requests;
+	}
+
 	// Default constructor
 	public User() {
 	}

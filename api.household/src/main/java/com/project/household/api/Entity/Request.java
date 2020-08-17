@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "REQUESTS")
-public abstract class Request {
+public class Request {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,11 +24,26 @@ public abstract class Request {
 	private String status;
 	
 	@ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="user_id", nullable=true)
 	private User user;
 
 	// Default constructor
 	public Request() {
+	}
+	
+	public Request( String content,String status, Date date, User user) {
+		this.content = content;
+		this.date = date;
+		this.status = status;
+		this.user = user;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -78,5 +93,12 @@ public abstract class Request {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "Request [senderId=" + senderId + ", receiverId=" + receiverId + ", content=" + content + ", date="
+				+ date + ", status=" + status + ", user=" + user + "]";
+	}
+	
 
 }

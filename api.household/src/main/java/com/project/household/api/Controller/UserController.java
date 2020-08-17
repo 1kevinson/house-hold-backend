@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.household.api.Configuration.UserModelAssembler;
 import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.UserNotFoundException;
+import com.project.household.api.Exception.EntityNotFoundException;
 import com.project.household.api.Repositiory.UserRepository;
 
 @RestController
@@ -39,28 +41,32 @@ public class UserController {
 		List<EntityModel<User>> employees = userRepository.findAll().stream() //
 				.map(userModelAssembler::toModel) //
 				.collect(Collectors.toList());
-
+		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating collections. It, too, also lets you include links. 
 		return CollectionModel.of(employees, linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
 	}
 
 	// Get one user
 	@GetMapping("/users/{id}")
 	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id));
 		return userModelAssembler.toModel(user);
 	}
 
 	// Add a new user
 	@PostMapping("/users")
-	public User addUser(@RequestBody User newUser) {
-		return userRepository.save(newUser);
+	public ResponseEntity<?> addUser(@RequestBody User newUser) {
+		EntityModel<User> entityModel = userModelAssembler.toModel(userRepository.save(newUser));
+
+		return ResponseEntity //
+				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+				.body(entityModel);
 	}
 
 	// Update a user
 	@PutMapping("/users/{id}")
-	public User replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
+	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
 
-		return userRepository.findById(id).map(user -> {
+		User updateUser = userRepository.findById(id).map(user -> {
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());
 			user.setEmail(newUser.getEmail());
@@ -69,12 +75,20 @@ public class UserController {
 			newUser.setId(id);
 			return userRepository.save(newUser);
 		});
+
+		EntityModel<User> entityModel = userModelAssembler.toModel(updateUser);
+
+		return ResponseEntity //
+				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+				.body(entityModel);
 	}
 
 	// Delete one user
 	@DeleteMapping("/users/{id}")
-	public void deleteUser(@PathVariable Integer id) {
+	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
 		userRepository.deleteById(id);
+
+		return ResponseEntity.noContent().build();
 	}
 
 }

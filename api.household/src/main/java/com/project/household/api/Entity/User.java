@@ -9,10 +9,19 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Entity
 @Table(name = "users")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="user_type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Tenant.class, name = "tenant"),
+    @JsonSubTypes.Type(value = Owner.class, name = "owner"),
+    @JsonSubTypes.Type(value = Admin.class, name = "admin")
+})
 public abstract class User {
 
 	@Id

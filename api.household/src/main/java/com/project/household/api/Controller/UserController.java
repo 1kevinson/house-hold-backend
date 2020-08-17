@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.household.api.Configuration.UserModelAssembler;
 import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.EntityNotFoundException;
+import com.project.household.api.Exception.UserNotFoundException;
 import com.project.household.api.Repositiory.UserRepository;
 
 @RestController
@@ -48,7 +48,7 @@ public class UserController {
 	// Get one user
 	@GetMapping("/users/{id}")
 	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id));
+		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 		return userModelAssembler.toModel(user);
 	}
 

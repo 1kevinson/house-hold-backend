@@ -1,7 +1,7 @@
 package com.project.household.api.Controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 //Always imports those two for generated HATEAOS links
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
@@ -41,7 +41,8 @@ public class UserController {
 		List<EntityModel<User>> users = userRepository.findAll().stream() //
 				.map(userModelAssembler::toModel) //
 				.collect(Collectors.toList());
-		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating collections. It, too, also lets you include links. 
+		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating
+		// collections. It, too, also lets you include links.
 		return CollectionModel.of(users, linkTo(methodOn(UserController.class).getAllUsers()).withSelfRel());
 	}
 

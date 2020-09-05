@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.household.api.Configuration.RequestModelAssembler;
+import com.project.household.api.Assembler.RequestModelAssembler;
 import com.project.household.api.Entity.Request;
 import com.project.household.api.Enumeration.RequestStatus;
 import com.project.household.api.Exception.RequestNotFoundException;
@@ -59,11 +59,12 @@ public class RequestController {
 	// Get all user requests
 	@GetMapping("/requests/users/{id}")
 	public CollectionModel<EntityModel<Request>> getUserRequests(@PathVariable Integer id) {
-		List<EntityModel<Request>>  requests = requestRepository.fetchUserRequests(id).stream() //
+		List<EntityModel<Request>> requests = requestRepository.fetchUserRequests(id).stream() //
 				.map(requestModelAssembler::toModel) //
 				.collect(Collectors.toList());
-		
-		return CollectionModel.of(requests, linkTo(methodOn(RequestController.class).getUserRequests(id)).withSelfRel());
+
+		return CollectionModel.of(requests,
+				linkTo(methodOn(RequestController.class).getUserRequests(id)).withSelfRel());
 	}
 
 	// Add a new request

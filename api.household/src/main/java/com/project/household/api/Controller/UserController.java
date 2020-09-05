@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.household.api.Configuration.UserModelAssembler;
+import com.project.household.api.Assembler.UserModelAssembler;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Exception.UserNotFoundException;
 import com.project.household.api.Repositiory.UserRepository;
@@ -66,7 +66,6 @@ public class UserController {
 	// Update a user
 	@PutMapping("/users/{id}")
 	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
-
 		User updateUser = userRepository.findById(id).map(user -> {
 			user.setFirstName(newUser.getFirstName());
 			user.setLastName(newUser.getLastName());

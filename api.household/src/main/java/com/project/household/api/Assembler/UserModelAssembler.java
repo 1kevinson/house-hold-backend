@@ -1,4 +1,4 @@
-package com.project.household.api.Configuration;
+package com.project.household.api.Assembler;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;

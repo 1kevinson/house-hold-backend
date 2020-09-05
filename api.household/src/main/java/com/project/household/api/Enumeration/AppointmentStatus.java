@@ -1,7 +1,7 @@
 package com.project.household.api.Enumeration;
 
 public enum AppointmentStatus {
-	ACCEPTED("ACCEPTED"), REFUSED("REFUSED");
+	ACCEPTED("ACCEPTED"), PENDING("PENDING"), REFUSED("REFUSED");
 
 	private final String enumString;
 

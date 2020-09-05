@@ -1,4 +1,4 @@
-package com.project.household.api.Repositiory;
+package com.project.household.api.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

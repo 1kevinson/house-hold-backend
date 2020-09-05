@@ -26,8 +26,8 @@ import com.project.household.api.Assembler.RequestModelAssembler;
 import com.project.household.api.Entity.Request;
 import com.project.household.api.Enumeration.RequestStatus;
 import com.project.household.api.Exception.RequestNotFoundException;
-import com.project.household.api.Repositiory.RequestRepository;
-import com.project.household.api.Repositiory.UserRepository;
+import com.project.household.api.Repository.RequestRepository;
+import com.project.household.api.Repository.UserRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -66,7 +66,6 @@ public class RequestController {
 		List<EntityModel<Request>> requests = requestRepository.fetchUserRequests(id).stream() //
 				.map(requestModelAssembler::toModel) //
 				.collect(Collectors.toList());
-
 		return CollectionModel.of(requests,
 				linkTo(methodOn(RequestController.class).getUserRequests(id)).withSelfRel());
 	}

@@ -40,8 +40,19 @@ public abstract class User {
 	@OneToMany(mappedBy = "user")
 	private Set<Request> requests;
 
+	@OneToMany(mappedBy = "user")
+	private Set<Appointment> appointments;
+
 	public Set<Request> getRequests() {
 		return requests;
+	}
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(Set<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 
 	// Default constructor

@@ -1,9 +1,9 @@
-package com.project.household.api.Repositiory;
+package com.project.household.api.Repository;
 
 import java.util.List;
 
 import com.project.household.api.Entity.Request;
 
-public interface RequestRepositoryCustom {
+public interface RequestRepositorySQLInterface {
 	List<Request> fetchUserRequests (Integer userId);
 }

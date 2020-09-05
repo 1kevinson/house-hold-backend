@@ -1,5 +1,4 @@
-package com.project.household.api.Repositiory;
-
+package com.project.household.api.Repository;
 
 import java.util.List;
 
@@ -13,19 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.household.api.Entity.Request;
 
 @Repository
-@Transactional(readOnly=true)
-public class RequestRepositoryImpl implements RequestRepositoryCustom {
+@Transactional(readOnly = true)
+//Custom implementation always end with "Impl"
+public class RequestRepositoryImpl implements RequestRepositorySQLInterface {
 
 	@PersistenceContext
 	EntityManager entityManager;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Request> fetchUserRequests(Integer userId) {
-		   Query query = entityManager.createNativeQuery("SELECT * FROM requests  WHERE user_id = ?", Request.class);
-	        query.setParameter(1, userId );
-	        
-	        return query.getResultList();
+		Query query = entityManager.createNativeQuery("SELECT * FROM requests  WHERE user_id = ?", Request.class);
+		query.setParameter(1, userId);
+
+		return query.getResultList();
 	}
 
 }

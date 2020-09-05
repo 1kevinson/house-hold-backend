@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "REQUESTS")
-@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "request_id")
 public class Request {
 
 	@Id

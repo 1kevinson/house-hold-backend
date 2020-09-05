@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		@JsonSubTypes.Type(value = Owner.class, name = "owner"),
 		@JsonSubTypes.Type(value = Admin.class, name = "admin") })
 //Add this Annotation to avoid Hateaos recursion response
-@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "user_id")
 public abstract class User {
 
 	@Id

@@ -76,6 +76,7 @@ public class RequestController {
 	public ResponseEntity<?> addRequest(@RequestBody Request newRequest, @PathVariable Integer user_id) {
 		// get the optional user or return null
 		newRequest.setUser(userRepository.findById(user_id).get());
+		newRequest.setSenderId(newRequest.getUser().getId());
 		newRequest.setDate(new Date());
 		newRequest.setStatus(RequestStatus.SENDED.getEnumString());
 		EntityModel<Request> entityModel = requestModelAssembler.toModel(requestRepository.save(newRequest));

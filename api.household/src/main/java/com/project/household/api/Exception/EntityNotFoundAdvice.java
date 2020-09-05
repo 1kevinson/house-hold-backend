@@ -14,7 +14,7 @@ public class EntityNotFoundAdvice {
 	String userNotFoundHandler(UserNotFoundException ex) {
 		return ex.getMessage();
 	}
-	
+
 	@ResponseBody
 	@ExceptionHandler(RequestNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)

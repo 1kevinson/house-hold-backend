@@ -10,8 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "REQUESTS")
+@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "id")
 public class Request {
 
 	@Id
@@ -22,22 +26,22 @@ public class Request {
 	private String content;
 	private Date date;
 	private String status;
-	
+
 	@ManyToOne
-    @JoinColumn(name="user_id", nullable=true)
+	@JoinColumn(name = "user_id", nullable = true)
 	private User user;
 
 	// Default constructor
 	public Request() {
 	}
-	
-	public Request( String content,String status, Date date, User user) {
+
+	public Request(String content, String status, Date date, User user) {
 		this.content = content;
 		this.date = date;
 		this.status = status;
 		this.user = user;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -99,6 +103,5 @@ public class Request {
 		return "Request [senderId=" + senderId + ", receiverId=" + receiverId + ", content=" + content + ", date="
 				+ date + ", status=" + status + ", user=" + user + "]";
 	}
-	
 
 }

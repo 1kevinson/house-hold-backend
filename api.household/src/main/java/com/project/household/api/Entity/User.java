@@ -12,8 +12,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "USERS")
@@ -23,6 +25,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({ @JsonSubTypes.Type(value = Tenant.class, name = "tenant"),
 		@JsonSubTypes.Type(value = Owner.class, name = "owner"),
 		@JsonSubTypes.Type(value = Admin.class, name = "admin") })
+//Add this Annotation to avoid Hateaos recursion response
+@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "id")
 public abstract class User {
 
 	@Id
@@ -32,7 +36,7 @@ public abstract class User {
 	private String lastName;
 	private String email;
 	private String password;
-	
+
 	@OneToMany(mappedBy = "user")
 	private Set<Request> requests;
 

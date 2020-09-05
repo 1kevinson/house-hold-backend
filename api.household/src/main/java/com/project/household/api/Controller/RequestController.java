@@ -27,6 +27,7 @@ import com.project.household.api.Entity.Request;
 import com.project.household.api.Enumeration.RequestStatus;
 import com.project.household.api.Exception.RequestNotFoundException;
 import com.project.household.api.Repositiory.RequestRepository;
+import com.project.household.api.Repositiory.UserRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -34,6 +35,9 @@ public class RequestController {
 
 	@Autowired
 	private RequestRepository requestRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private RequestModelAssembler requestModelAssembler;
@@ -68,8 +72,10 @@ public class RequestController {
 	}
 
 	// Add a new request
-	@PostMapping("/requests")
-	public ResponseEntity<?> addRequest(@RequestBody Request newRequest) {
+	@PostMapping("/requests/{user_id}")
+	public ResponseEntity<?> addRequest(@RequestBody Request newRequest, @PathVariable Integer user_id) {
+		// get the optional user or return null
+		newRequest.setUser(userRepository.findById(user_id).get());
 		newRequest.setDate(new Date());
 		newRequest.setStatus(RequestStatus.SENDED.getEnumString());
 		EntityModel<Request> entityModel = requestModelAssembler.toModel(requestRepository.save(newRequest));

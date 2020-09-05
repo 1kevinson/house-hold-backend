@@ -30,11 +30,11 @@ class LoadDatabase {
 			// Load Users
 			for (int i = 1; i <= numberOfUsers; i++) {
 				if (i < 10) {
-					log.info("User " + i + "=>"
+					log.info("User " + i + " => "
 							+ userRepository.save(new Tenant(faker.name().firstName(), faker.name().lastName(),
 									faker.internet().emailAddress(), passGen.encodePassword("pass_word"))));
 				} else {
-					log.info("User " + i + "=>"
+					log.info("User " + i + " => "
 							+ userRepository.save(new Owner(faker.name().firstName(), faker.name().lastName(),
 									faker.internet().emailAddress(), passGen.encodePassword("pass_word"))));
 				}

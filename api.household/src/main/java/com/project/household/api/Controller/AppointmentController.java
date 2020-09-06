@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,7 +78,6 @@ public class AppointmentController {
 	public ResponseEntity<?> addAppointment(@RequestBody Appointment newAppointment, @PathVariable Integer user_id) {
 		// get the optional user or return null
 		newAppointment.setUser(userRepository.findById(user_id).get());
-		newAppointment.setSenderId(newAppointment.getUser().getId());
 		newAppointment.setDate(new Date());
 		newAppointment.setStatus(AppointmentStatus.PENDING.getEnumString());
 		EntityModel<Appointment> entityModel = appointmentModelAssembler
@@ -112,7 +112,7 @@ public class AppointmentController {
 	public ResponseEntity<?> deleteAppointment(@PathVariable Integer id) {
 		appointmentRepository.deleteById(id);
 
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.project.household.api.Entity;
 
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -25,7 +24,7 @@ public class Appointment {
 	private Integer senderId;
 	private Integer receiverId;
 	private Date date;
-	private Time time;
+	private String time;
 	private String place;
 	private String notes;
 	private String status;
@@ -38,7 +37,7 @@ public class Appointment {
 	public Appointment() {
 	}
 
-	public Appointment(String place, String notes, String status, Date date, Time time, User user) {
+	public Appointment(String place, String notes, String status, Date date, String time, User user) {
 		this.place = place;
 		this.time = time;
 		this.notes = notes;
@@ -63,11 +62,11 @@ public class Appointment {
 		this.id = id;
 	}
 
-	public Time getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Time time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 

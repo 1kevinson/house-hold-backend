@@ -57,4 +57,11 @@ public class EntityNotFoundAdvice {
 	String roomNotFoundHandler(RoomNotFoundException ex) {
 		return ex.getMessage();
 	}
+
+	@ResponseBody
+	@ExceptionHandler(ErrorExceptionGeneralHandler.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	String generalServerHandler(ErrorExceptionGeneralHandler ex) {
+		return ex.getMessage();
+	}
 }

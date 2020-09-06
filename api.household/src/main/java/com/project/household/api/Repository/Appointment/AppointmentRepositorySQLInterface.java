@@ -1,4 +1,4 @@
-package com.project.household.api.Repository;
+package com.project.household.api.Repository.Appointment;
 
 import java.util.List;
 

@@ -26,8 +26,8 @@ import com.project.household.api.Assembler.RequestModelAssembler;
 import com.project.household.api.Entity.Request;
 import com.project.household.api.Enumeration.RequestStatus;
 import com.project.household.api.Exception.RequestNotFoundException;
-import com.project.household.api.Repository.RequestRepository;
-import com.project.household.api.Repository.UserRepository;
+import com.project.household.api.Repository.Request.RequestRepository;
+import com.project.household.api.Repository.User.UserRepository;
 
 @RestController
 @RequestMapping("/api")

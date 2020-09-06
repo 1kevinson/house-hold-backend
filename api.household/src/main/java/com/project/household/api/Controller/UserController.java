@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.household.api.Assembler.UserModelAssembler;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Exception.UserNotFoundException;
-import com.project.household.api.Repository.UserRepository;
+import com.project.household.api.Repository.User.UserRepository;
 
 @RestController
 @RequestMapping("/api")

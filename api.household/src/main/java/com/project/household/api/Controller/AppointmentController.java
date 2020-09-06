@@ -26,8 +26,8 @@ import com.project.household.api.Assembler.AppointmentModelAssembler;
 import com.project.household.api.Entity.Appointment;
 import com.project.household.api.Enumeration.AppointmentStatus;
 import com.project.household.api.Exception.AppointmentNotFoundException;
-import com.project.household.api.Repository.AppointmentRepository;
-import com.project.household.api.Repository.UserRepository;
+import com.project.household.api.Repository.Appointment.AppointmentRepository;
+import com.project.household.api.Repository.User.UserRepository;
 
 @RestController
 @RequestMapping("/api")

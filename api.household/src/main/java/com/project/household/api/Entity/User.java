@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,23 +39,18 @@ public abstract class User {
 	private String email;
 	private String password;
 
+	@ManyToOne
+	@JoinColumn(name = "house_id", nullable = true)
+	private House house;
+
 	@OneToMany(mappedBy = "user")
 	private Set<Request> requests;
 
 	@OneToMany(mappedBy = "user")
 	private Set<Appointment> appointments;
 
-	public Set<Request> getRequests() {
-		return requests;
-	}
-
-	public Set<Appointment> getAppointments() {
-		return appointments;
-	}
-
-	public void setAppointments(Set<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+	@OneToMany(mappedBy = "owner")
+	private Set<House> houses;
 
 	// Default constructor
 	public User() {
@@ -65,6 +62,18 @@ public abstract class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+	}
+
+	public Set<Request> getRequests() {
+		return requests;
+	}
+
+	public Set<House> getHouses() {
+		return houses;
+	}
+
+	public Set<Appointment> getAppointments() {
+		return appointments;
 	}
 
 	public String getName() {
@@ -119,7 +128,7 @@ public abstract class User {
 
 	@Override
 	public String toString() {
-		return "Employee{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
+		return "User { " + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
 				+ '\'' + ", email='" + this.email + '\'' + ", password='" + this.password + '\'' + '}';
 	}
 

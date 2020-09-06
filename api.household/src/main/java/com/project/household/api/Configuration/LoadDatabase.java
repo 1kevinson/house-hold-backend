@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import com.github.javafaker.Faker;
 import com.project.household.api.Entity.Owner;
 import com.project.household.api.Entity.Tenant;
-import com.project.household.api.Repository.RequestRepository;
-import com.project.household.api.Repository.UserRepository;
+import com.project.household.api.Repository.Request.RequestRepository;
+import com.project.household.api.Repository.User.UserRepository;
 
 @Configuration
 class LoadDatabase {

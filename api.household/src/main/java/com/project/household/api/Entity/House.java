@@ -29,14 +29,14 @@ public class House {
 	@JoinColumn(name = "owner_id", nullable = true)
 	private Owner owner;
 
-	@OneToMany(mappedBy = "user")
-	private Set<Request> requests;
-
 	@OneToMany(mappedBy = "house")
 	private Set<Tenant> tenants;
 
-	public Set<Request> getRequests() {
-		return requests;
+	@OneToMany(mappedBy = "house")
+	private Set<Room> rooms;
+
+	public Set<Room> getRooms() {
+		return rooms;
 	}
 
 	public Set<Tenant> getTenants() {

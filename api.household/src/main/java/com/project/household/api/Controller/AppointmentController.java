@@ -40,13 +40,13 @@ public class AppointmentController {
 	private UserRepository userRepository;
 
 	@Autowired
-	private AppointmentModelAssembler AppointmentModelAssembler;
+	private AppointmentModelAssembler appointmentModelAssembler;
 
 	// Get all appointments
 	@GetMapping("/appointments")
 	public CollectionModel<EntityModel<Appointment>> getAllAppointments() {
 		List<EntityModel<Appointment>> appointments = appointmentRepository.findAll().stream() //
-				.map(AppointmentModelAssembler::toModel) //
+				.map(appointmentModelAssembler::toModel) //
 				.collect(Collectors.toList());
 		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating
 		// collections. It, too, also lets you include links.
@@ -59,28 +59,28 @@ public class AppointmentController {
 	public EntityModel<Appointment> getOneAppointment(@PathVariable Integer id) {
 		Appointment Appointment = appointmentRepository.findById(id)
 				.orElseThrow(() -> new AppointmentNotFoundException(id));
-		return AppointmentModelAssembler.toModel(Appointment);
+		return appointmentModelAssembler.toModel(Appointment);
 	}
 
 	// Get all user appointments
 	@GetMapping("/appointments/users/{id}")
 	public CollectionModel<EntityModel<Appointment>> getUserAppointments(@PathVariable Integer id) {
 		List<EntityModel<Appointment>> appointments = appointmentRepository.fetchUserAppointments(id).stream() //
-				.map(AppointmentModelAssembler::toModel) //
+				.map(appointmentModelAssembler::toModel) //
 				.collect(Collectors.toList());
 		return CollectionModel.of(appointments,
 				linkTo(methodOn(AppointmentController.class).getUserAppointments(id)).withSelfRel());
 	}
 
 	// Add a new Appointment
-	@PostMapping("/appointments/{user_id}")
+	@PostMapping("/appointments/add/{user_id}")
 	public ResponseEntity<?> addAppointment(@RequestBody Appointment newAppointment, @PathVariable Integer user_id) {
 		// get the optional user or return null
 		newAppointment.setUser(userRepository.findById(user_id).get());
 		newAppointment.setSenderId(newAppointment.getUser().getId());
 		newAppointment.setDate(new Date());
 		newAppointment.setStatus(AppointmentStatus.PENDING.getEnumString());
-		EntityModel<Appointment> entityModel = AppointmentModelAssembler
+		EntityModel<Appointment> entityModel = appointmentModelAssembler
 				.toModel(appointmentRepository.save(newAppointment));
 
 		return ResponseEntity //
@@ -100,7 +100,7 @@ public class AppointmentController {
 			return appointmentRepository.save(newAppointment);
 		});
 
-		EntityModel<Appointment> entityModel = AppointmentModelAssembler.toModel(updateAppointment);
+		EntityModel<Appointment> entityModel = appointmentModelAssembler.toModel(updateAppointment);
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //

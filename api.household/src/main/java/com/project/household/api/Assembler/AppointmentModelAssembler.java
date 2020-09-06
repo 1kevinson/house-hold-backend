@@ -14,9 +14,9 @@ import com.project.household.api.Entity.Appointment;
 public class AppointmentModelAssembler implements RepresentationModelAssembler<Appointment, EntityModel<Appointment>> {
 
 	@Override
-	public EntityModel<Appointment> toModel(Appointment request) {
-		return EntityModel.of(request, //
-				linkTo(methodOn(AppointmentController.class).getOneAppointment(request.getId())).withSelfRel(),
+	public EntityModel<Appointment> toModel(Appointment appointment) {
+		return EntityModel.of(appointment, //
+				linkTo(methodOn(AppointmentController.class).getOneAppointment(appointment.getId())).withSelfRel(),
 				linkTo(methodOn(AppointmentController.class).getAllAppointments()).withRel("appointments"));
 	}
 

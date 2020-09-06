@@ -71,7 +71,7 @@ public class RequestController {
 	}
 
 	// Add a new request
-	@PostMapping("/requests/{user_id}")
+	@PostMapping("/requests/add/{user_id}")
 	public ResponseEntity<?> addRequest(@RequestBody Request newRequest, @PathVariable Integer user_id) {
 		// get the optional user or return null
 		newRequest.setUser(userRepository.findById(user_id).get());

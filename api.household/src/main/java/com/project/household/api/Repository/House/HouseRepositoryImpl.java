@@ -1,4 +1,4 @@
-package com.project.household.api.Repository.Room;
+package com.project.household.api.Repository.House;
 
 import java.util.List;
 
@@ -9,20 +9,19 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.household.api.Entity.Appointment;
+import com.project.household.api.Entity.House;
 
 @Repository
 @Transactional(readOnly = true)
-public class AppointmentRepositoryImpl implements AppointmentRepositorySQLInterface {
+public class HouseRepositoryImpl implements HouseRepositorySQLInterface {
 
 	@PersistenceContext
 	EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Appointment> fetchUserAppointments(Integer userId) {
-		Query query = entityManager.createNativeQuery("SELECT * FROM appointments WHERE user_id = ?",
-				Appointment.class);
+	public List<House> fetchOwnerHouses(Integer userId) {
+		Query query = entityManager.createNativeQuery("SELECT * FROM houses WHERE user_id = ?", House.class);
 		query.setParameter(1, userId);
 
 		return query.getResultList();

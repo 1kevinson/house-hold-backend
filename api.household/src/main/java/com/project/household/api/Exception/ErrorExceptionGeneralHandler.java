@@ -1,9 +1,9 @@
 package com.project.household.api.Exception;
 
 @SuppressWarnings("serial")
-public class ErrorException extends RuntimeException {
+public class ErrorExceptionGeneralHandler extends RuntimeException {
 	// Use for custom exception messages
-	public ErrorException(String message) {
+	public ErrorExceptionGeneralHandler(String message) {
 		super("Error message : " + message);
 	}
 }

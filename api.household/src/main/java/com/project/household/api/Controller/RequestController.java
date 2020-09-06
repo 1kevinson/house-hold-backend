@@ -86,7 +86,7 @@ public class RequestController {
 	}
 
 	// Update a request
-	@PutMapping("/requests/{id}")
+	@PutMapping("/requests/update/{id}")
 	public ResponseEntity<?> replaceRequest(@RequestBody Request newRequest, @PathVariable Integer id) {
 		Request updateRequest = requestRepository.findById(id).map(request -> {
 			request.setStatus(newRequest.getStatus());
@@ -105,7 +105,7 @@ public class RequestController {
 	}
 
 	// Delete one request
-	@DeleteMapping("/requests/{id}")
+	@DeleteMapping("/requests/delete/{id}")
 	public ResponseEntity<?> deleteRequest(@PathVariable Integer id) {
 		requestRepository.deleteById(id);
 

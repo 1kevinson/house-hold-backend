@@ -89,7 +89,7 @@ public class AppointmentController {
 	}
 
 	// Update a Appointment
-	@PutMapping("/appointments/{id}")
+	@PutMapping("/appointments/update/{id}")
 	public ResponseEntity<?> replaceAppointment(@RequestBody Appointment newAppointment, @PathVariable Integer id) {
 		Appointment updateAppointment = appointmentRepository.findById(id).map(Appointment -> {
 			Appointment.setStatus(newAppointment.getStatus());
@@ -108,7 +108,7 @@ public class AppointmentController {
 	}
 
 	// Delete one Appointment
-	@DeleteMapping("/appointments/{id}")
+	@DeleteMapping("/appointments/delete/{id}")
 	public ResponseEntity<?> deleteAppointment(@PathVariable Integer id) {
 		appointmentRepository.deleteById(id);
 

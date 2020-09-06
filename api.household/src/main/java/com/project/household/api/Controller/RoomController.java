@@ -54,7 +54,7 @@ public class RoomController {
 	}
 
 	// Add a new room
-	@PostMapping("/rooms")
+	@PostMapping("/rooms/add")
 	public ResponseEntity<?> addRoom(@RequestBody Room newRoom) {
 		EntityModel<Room> entityModel = roomModelAssembler.toModel(roomRepository.save(newRoom));
 
@@ -64,7 +64,7 @@ public class RoomController {
 	}
 
 	// Update a room
-	@PutMapping("/rooms/{id}")
+	@PutMapping("/rooms/update/{id}")
 	public ResponseEntity<?> replaceRoom(@RequestBody Room newRoom, @PathVariable Integer id) {
 		Room updateRoom = roomRepository.findById(id).map(room -> {
 			return roomRepository.save(room);
@@ -81,7 +81,7 @@ public class RoomController {
 	}
 
 	// Delete one room
-	@DeleteMapping("/rooms/{id}")
+	@DeleteMapping("/rooms/delete/{id}")
 	public ResponseEntity<?> deleteRoom(@PathVariable Integer id) {
 		roomRepository.deleteById(id);
 

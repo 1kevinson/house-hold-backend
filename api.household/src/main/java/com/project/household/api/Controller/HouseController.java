@@ -53,7 +53,7 @@ public class HouseController {
 	}
 
 	// Add a new house
-	@PostMapping("/houses")
+	@PostMapping("/houses/add")
 	public ResponseEntity<?> addHouse(@RequestBody House newHouse) {
 		EntityModel<House> entityModel = houseModelAssembler.toModel(houseRepository.save(newHouse));
 
@@ -63,7 +63,7 @@ public class HouseController {
 	}
 
 	// Update a house
-	@PutMapping("/houses/{id}")
+	@PutMapping("/houses/update/{id}")
 	public ResponseEntity<?> replaceHouse(@RequestBody House newHouse, @PathVariable Integer id) {
 		House updateHouse = houseRepository.findById(id).map(house -> {
 			return houseRepository.save(house);
@@ -80,7 +80,7 @@ public class HouseController {
 	}
 
 	// Delete one house
-	@DeleteMapping("/houses/{id}")
+	@DeleteMapping("/houses/delete/{id}")
 	public ResponseEntity<?> deleteHouse(@PathVariable Integer id) {
 		houseRepository.deleteById(id);
 

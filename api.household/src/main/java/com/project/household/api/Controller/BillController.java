@@ -52,7 +52,7 @@ public class BillController {
 	}
 
 	// Add a new bill
-	@PostMapping("/bills")
+	@PostMapping("/bills/add")
 	public ResponseEntity<?> addBill(@RequestBody Bill newBill) {
 		EntityModel<Bill> entityModel = billModelAssembler.toModel(billRepository.save(newBill));
 
@@ -62,7 +62,7 @@ public class BillController {
 	}
 
 	// Update a bill
-	@PutMapping("/bills/{id}")
+	@PutMapping("/bills/update/{id}")
 	public ResponseEntity<?> replaceBill(@RequestBody Bill newBill, @PathVariable Integer id) {
 		Bill updateBill = billRepository.findById(id).map(bill -> {
 			return billRepository.save(bill);
@@ -79,7 +79,7 @@ public class BillController {
 	}
 
 	// Delete one bill
-	@DeleteMapping("/bills/{id}")
+	@DeleteMapping("/bills/delete/{id}")
 	public ResponseEntity<?> deleteBill(@PathVariable Integer id) {
 		billRepository.deleteById(id);
 

@@ -54,7 +54,7 @@ public class UserController {
 	}
 
 	// Add a new user
-	@PostMapping("/users")
+	@PostMapping("/users/add")
 	public ResponseEntity<?> addUser(@RequestBody User newUser) {
 		EntityModel<User> entityModel = userModelAssembler.toModel(userRepository.save(newUser));
 
@@ -64,7 +64,7 @@ public class UserController {
 	}
 
 	// Update a user
-	@PutMapping("/users/{id}")
+	@PutMapping("/users/update/{id}")
 	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
 		User updateUser = userRepository.findById(id).map(user -> {
 			user.setFirstName(newUser.getFirstName());
@@ -84,7 +84,7 @@ public class UserController {
 	}
 
 	// Delete one user
-	@DeleteMapping("/users/{id}")
+	@DeleteMapping("/users/delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
 		userRepository.deleteById(id);
 

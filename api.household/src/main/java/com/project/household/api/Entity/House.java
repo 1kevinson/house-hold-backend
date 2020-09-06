@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "HOUSES")
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "house_id")
-public abstract class House {
+public class House {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

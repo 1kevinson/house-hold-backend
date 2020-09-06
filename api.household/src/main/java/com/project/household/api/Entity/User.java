@@ -12,6 +12,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -52,6 +53,13 @@ public abstract class User {
 	@OneToMany(mappedBy = "owner")
 	private Set<House> houses;
 
+	@OneToMany(mappedBy = "owner")
+	private Set<Bill> bills;
+
+	@OneToOne
+	@JoinColumn(name = "room_id", referencedColumnName = "id")
+	private Room room;
+
 	// Default constructor
 	public User() {
 	}
@@ -66,6 +74,10 @@ public abstract class User {
 
 	public Set<Request> getRequests() {
 		return requests;
+	}
+
+	public Set<Bill> getBills() {
+		return bills;
 	}
 
 	public Set<House> getHouses() {

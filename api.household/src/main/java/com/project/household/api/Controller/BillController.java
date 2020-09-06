@@ -21,72 +21,67 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.household.api.Assembler.UserModelAssembler;
-import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.NotFound.UserNotFoundException;
-import com.project.household.api.Repository.User.UserRepository;
+import com.project.household.api.Assembler.BillModelAssembler;
+import com.project.household.api.Entity.Bill;
+import com.project.household.api.Exception.NotFound.BillNotFoundException;
+import com.project.household.api.Repository.Bill.BillRepository;
 
 @RestController
 @RequestMapping("/api")
 public class BillController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private BillRepository billRepository;
 	@Autowired
-	private UserModelAssembler userModelAssembler;
+	private BillModelAssembler billModelAssembler;
 
-	// Get all users
-	@GetMapping("/users")
-	public CollectionModel<EntityModel<User>> getAllUsers() {
-		List<EntityModel<User>> users = userRepository.findAll().stream() //
-				.map(userModelAssembler::toModel) //
+	// Get all bills
+	@GetMapping("/bills")
+	public CollectionModel<EntityModel<Bill>> getAllBills() {
+		List<EntityModel<Bill>> bills = billRepository.findAll().stream() //
+				.map(billModelAssembler::toModel) //
 				.collect(Collectors.toList());
-		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating
-		// collections. It, too, also lets you include links.
-		return CollectionModel.of(users, linkTo(methodOn(BillController.class).getAllUsers()).withSelfRel());
+		return CollectionModel.of(bills, linkTo(methodOn(BillController.class).getAllBills()).withSelfRel());
 	}
 
-	// Get one user
-	@GetMapping("/users/{id}")
-	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-		return userModelAssembler.toModel(user);
+	// Get one bill
+	@GetMapping("/bills/{id}")
+	public EntityModel<Bill> getOneBill(@PathVariable Integer id) {
+		Bill bill = billRepository.findById(id).orElseThrow(() -> new BillNotFoundException(id));
+		return billModelAssembler.toModel(bill);
 	}
 
-	// Add a new user
-	@PostMapping("/users")
-	public ResponseEntity<?> addUser(@RequestBody User newUser) {
-		EntityModel<User> entityModel = userModelAssembler.toModel(userRepository.save(newUser));
+	// Add a new bill
+	@PostMapping("/bills")
+	public ResponseEntity<?> addBill(@RequestBody Bill newBill) {
+		EntityModel<Bill> entityModel = billModelAssembler.toModel(billRepository.save(newBill));
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Update a user
-	@PutMapping("/users/{id}")
-	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
-		User updateUser = userRepository.findById(id).map(user -> {
-			user.setFirstName(newUser.getFirstName());
-			user.setLastName(newUser.getLastName());
-			user.setEmail(newUser.getEmail());
-			return userRepository.save(user);
+	// Update a bill
+	@PutMapping("/bills/{id}")
+	public ResponseEntity<?> replaceBill(@RequestBody Bill newBill, @PathVariable Integer id) {
+		Bill updateBill = billRepository.findById(id).map(bill -> {
+			return billRepository.save(bill);
 		}).orElseGet(() -> {
-			newUser.setId(id);
-			return userRepository.save(newUser);
+			newBill.setId(id);
+			return billRepository.save(newBill);
 		});
 
-		EntityModel<User> entityModel = userModelAssembler.toModel(updateUser);
+		EntityModel<Bill> entityModel = billModelAssembler.toModel(updateBill);
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Delete one user
-	@DeleteMapping("/users/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
-		userRepository.deleteById(id);
+	// Delete one bill
+	@DeleteMapping("/bills/{id}")
+	public ResponseEntity<?> deleteBill(@PathVariable Integer id) {
+		billRepository.deleteById(id);
 
 		return ResponseEntity.noContent().build();
 	}

@@ -21,72 +21,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.household.api.Assembler.UserModelAssembler;
-import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.NotFound.UserNotFoundException;
-import com.project.household.api.Repository.User.UserRepository;
+import com.project.household.api.Assembler.RoomModelAssembler;
+import com.project.household.api.Entity.Room;
+import com.project.household.api.Exception.NotFound.RoomNotFoundException;
+import com.project.household.api.Repository.Room.RoomRepository;
 
 @RestController
 @RequestMapping("/api")
 public class RoomController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private RoomRepository roomRepository;
 	@Autowired
-	private UserModelAssembler userModelAssembler;
+	private RoomModelAssembler roomModelAssembler;
 
-	// Get all users
-	@GetMapping("/users")
-	public CollectionModel<EntityModel<User>> getAllUsers() {
-		List<EntityModel<User>> users = userRepository.findAll().stream() //
-				.map(userModelAssembler::toModel) //
+	// Get all rooms
+	@GetMapping("/rooms")
+	public CollectionModel<EntityModel<Room>> getAllRooms() {
+		List<EntityModel<Room>> rooms = roomRepository.findAll().stream() //
+				.map(roomModelAssembler::toModel) //
 				.collect(Collectors.toList());
 		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating
 		// collections. It, too, also lets you include links.
-		return CollectionModel.of(users, linkTo(methodOn(RoomController.class).getAllUsers()).withSelfRel());
+		return CollectionModel.of(rooms, linkTo(methodOn(RoomController.class).getAllRooms()).withSelfRel());
 	}
 
-	// Get one user
-	@GetMapping("/users/{id}")
-	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-		return userModelAssembler.toModel(user);
+	// Get one room
+	@GetMapping("/rooms/{id}")
+	public EntityModel<Room> getOneRoom(@PathVariable Integer id) {
+		Room room = roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
+		return roomModelAssembler.toModel(room);
 	}
 
-	// Add a new user
-	@PostMapping("/users")
-	public ResponseEntity<?> addUser(@RequestBody User newUser) {
-		EntityModel<User> entityModel = userModelAssembler.toModel(userRepository.save(newUser));
+	// Add a new room
+	@PostMapping("/rooms")
+	public ResponseEntity<?> addRoom(@RequestBody Room newRoom) {
+		EntityModel<Room> entityModel = roomModelAssembler.toModel(roomRepository.save(newRoom));
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Update a user
-	@PutMapping("/users/{id}")
-	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
-		User updateUser = userRepository.findById(id).map(user -> {
-			user.setFirstName(newUser.getFirstName());
-			user.setLastName(newUser.getLastName());
-			user.setEmail(newUser.getEmail());
-			return userRepository.save(user);
+	// Update a room
+	@PutMapping("/rooms/{id}")
+	public ResponseEntity<?> replaceRoom(@RequestBody Room newRoom, @PathVariable Integer id) {
+		Room updateRoom = roomRepository.findById(id).map(room -> {
+			return roomRepository.save(room);
 		}).orElseGet(() -> {
-			newUser.setId(id);
-			return userRepository.save(newUser);
+			newRoom.setId(id);
+			return roomRepository.save(newRoom);
 		});
 
-		EntityModel<User> entityModel = userModelAssembler.toModel(updateUser);
+		EntityModel<Room> entityModel = roomModelAssembler.toModel(updateRoom);
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Delete one user
-	@DeleteMapping("/users/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
-		userRepository.deleteById(id);
+	// Delete one room
+	@DeleteMapping("/rooms/{id}")
+	public ResponseEntity<?> deleteRoom(@PathVariable Integer id) {
+		roomRepository.deleteById(id);
 
 		return ResponseEntity.noContent().build();
 	}

@@ -21,72 +21,68 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.household.api.Assembler.UserModelAssembler;
-import com.project.household.api.Entity.User;
-import com.project.household.api.Exception.NotFound.UserNotFoundException;
-import com.project.household.api.Repository.User.UserRepository;
+import com.project.household.api.Assembler.HouseModelAssembler;
+import com.project.household.api.Entity.House;
+import com.project.household.api.Exception.NotFound.HouseNotFoundException;
+import com.project.household.api.Repository.House.HouseRepository;
 
 @RestController
 @RequestMapping("/api")
 public class HouseController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private HouseRepository houseRepository;
 	@Autowired
-	private UserModelAssembler userModelAssembler;
+	private HouseModelAssembler houseModelAssembler;
 
-	// Get all users
-	@GetMapping("/users")
-	public CollectionModel<EntityModel<User>> getAllUsers() {
-		List<EntityModel<User>> users = userRepository.findAll().stream() //
-				.map(userModelAssembler::toModel) //
+	// Get all houses
+	@GetMapping("/houses")
+	public CollectionModel<EntityModel<House>> getAllHouses() {
+		List<EntityModel<House>> houses = houseRepository.findAll().stream() //
+				.map(houseModelAssembler::toModel) //
 				.collect(Collectors.toList());
-		// CollectionModel<> is another Spring HATEOAS container aimed at encapsulating
-		// collections. It, too, also lets you include links.
-		return CollectionModel.of(users, linkTo(methodOn(HouseController.class).getAllUsers()).withSelfRel());
+
+		return CollectionModel.of(houses, linkTo(methodOn(HouseController.class).getAllHouses()).withSelfRel());
 	}
 
-	// Get one user
-	@GetMapping("/users/{id}")
-	public EntityModel<User> getOneUser(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-		return userModelAssembler.toModel(user);
+	// Get one house
+	@GetMapping("/houses/{id}")
+	public EntityModel<House> getOneHouse(@PathVariable Integer id) {
+		House house = houseRepository.findById(id).orElseThrow(() -> new HouseNotFoundException(id));
+		return houseModelAssembler.toModel(house);
 	}
 
-	// Add a new user
-	@PostMapping("/users")
-	public ResponseEntity<?> addUser(@RequestBody User newUser) {
-		EntityModel<User> entityModel = userModelAssembler.toModel(userRepository.save(newUser));
+	// Add a new house
+	@PostMapping("/houses")
+	public ResponseEntity<?> addHouse(@RequestBody House newHouse) {
+		EntityModel<House> entityModel = houseModelAssembler.toModel(houseRepository.save(newHouse));
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Update a user
-	@PutMapping("/users/{id}")
-	public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Integer id) {
-		User updateUser = userRepository.findById(id).map(user -> {
-			user.setFirstName(newUser.getFirstName());
-			user.setLastName(newUser.getLastName());
-			user.setEmail(newUser.getEmail());
-			return userRepository.save(user);
+	// Update a house
+	@PutMapping("/houses/{id}")
+	public ResponseEntity<?> replaceHouse(@RequestBody House newHouse, @PathVariable Integer id) {
+		House updateHouse = houseRepository.findById(id).map(house -> {
+			return houseRepository.save(house);
 		}).orElseGet(() -> {
-			newUser.setId(id);
-			return userRepository.save(newUser);
+			newHouse.setId(id);
+			return houseRepository.save(newHouse);
 		});
 
-		EntityModel<User> entityModel = userModelAssembler.toModel(updateUser);
+		EntityModel<House> entityModel = houseModelAssembler.toModel(updateHouse);
 
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
 
-	// Delete one user
-	@DeleteMapping("/users/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
-		userRepository.deleteById(id);
+	// Delete one house
+	@DeleteMapping("/houses/{id}")
+	public ResponseEntity<?> deleteHouse(@PathVariable Integer id) {
+		houseRepository.deleteById(id);
 
 		return ResponseEntity.noContent().build();
 	}

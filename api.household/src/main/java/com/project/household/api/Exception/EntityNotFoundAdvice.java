@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-//Use to send error in the response body
+import com.project.household.api.Exception.NotFound.AppointmentNotFoundException;
+import com.project.household.api.Exception.NotFound.BillNotFoundException;
+import com.project.household.api.Exception.NotFound.HouseNotFoundException;
+import com.project.household.api.Exception.NotFound.RequestNotFoundException;
+import com.project.household.api.Exception.NotFound.RoomNotFoundException;
+import com.project.household.api.Exception.NotFound.UserNotFoundException;
 
+//Use to send error in the response body
 @ControllerAdvice
 public class EntityNotFoundAdvice {
 	@ResponseBody
@@ -27,8 +33,28 @@ public class EntityNotFoundAdvice {
 	@ResponseBody
 	@ExceptionHandler(AppointmentNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String userNotFoundHandler(AppointmentNotFoundException ex) {
+	String appointmentNotFoundHandler(AppointmentNotFoundException ex) {
 		return ex.getMessage();
 	}
 
+	@ResponseBody
+	@ExceptionHandler(BillNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String billNotFoundHandler(BillNotFoundException ex) {
+		return ex.getMessage();
+	}
+
+	@ResponseBody
+	@ExceptionHandler(HouseNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String houseNotFoundHandler(HouseNotFoundException ex) {
+		return ex.getMessage();
+	}
+
+	@ResponseBody
+	@ExceptionHandler(RoomNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String roomNotFoundHandler(RoomNotFoundException ex) {
+		return ex.getMessage();
+	}
 }

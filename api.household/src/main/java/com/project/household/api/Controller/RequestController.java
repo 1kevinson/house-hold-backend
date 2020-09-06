@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.household.api.Assembler.RequestModelAssembler;
 import com.project.household.api.Entity.Request;
 import com.project.household.api.Enumeration.RequestStatus;
-import com.project.household.api.Exception.RequestNotFoundException;
+import com.project.household.api.Exception.NotFound.RequestNotFoundException;
 import com.project.household.api.Repository.Request.RequestRepository;
 import com.project.household.api.Repository.User.UserRepository;
 

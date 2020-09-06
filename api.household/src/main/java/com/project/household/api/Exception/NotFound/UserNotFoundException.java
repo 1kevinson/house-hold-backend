@@ -1,4 +1,4 @@
-package com.project.household.api.Exception;
+package com.project.household.api.Exception.NotFound;
 
 @SuppressWarnings("serial")
 public class UserNotFoundException extends RuntimeException {

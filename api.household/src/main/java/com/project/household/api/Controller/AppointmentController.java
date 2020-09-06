@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.household.api.Assembler.AppointmentModelAssembler;
 import com.project.household.api.Entity.Appointment;
 import com.project.household.api.Enumeration.AppointmentStatus;
-import com.project.household.api.Exception.AppointmentNotFoundException;
+import com.project.household.api.Exception.NotFound.AppointmentNotFoundException;
 import com.project.household.api.Repository.Appointment.AppointmentRepository;
 import com.project.household.api.Repository.User.UserRepository;
 

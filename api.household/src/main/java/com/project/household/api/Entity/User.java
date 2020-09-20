@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "USERS")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,9 +35,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //Add this Annotation to avoid Hateaos recursion response
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "user_id")
 public abstract class User implements UserDetails {
-
-	// Default Serial ID
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

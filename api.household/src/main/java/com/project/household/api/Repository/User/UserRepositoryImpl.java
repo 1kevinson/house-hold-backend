@@ -1,5 +1,7 @@
 package com.project.household.api.Repository.User;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,11 +19,12 @@ public class UserRepositoryImpl implements UserRepositorySQLInterface {
 	EntityManager entityManager;
 
 	@Override
-	public User findUserByEmail(String email) {
+	public List<User> findUserByEmail(String email) {
 		Query query = entityManager.createNativeQuery("SELECT * FROM users WHERE email = ?", User.class);
 		query.setParameter(1, email);
 
-		return (User) query.getSingleResult();
+		return query.getResultList();
+
 	}
 
 }

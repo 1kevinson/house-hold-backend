@@ -13,9 +13,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.household.api.Assembler.UserModelAssembler;
-import com.project.household.api.Configuration.JWT.JwtRequest;
-import com.project.household.api.Configuration.JWT.JwtResponse;
-import com.project.household.api.Configuration.JWT.JwtTokenUtil;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Exception.NotFound.UserNotFoundException;
 import com.project.household.api.Repository.User.UserRepository;
@@ -48,27 +41,6 @@ public class UserController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-
-	private void authenticate(String email, String password) throws Exception {
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
-
-	@RequestMapping(value = "/user/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-		final User user = userRepository.findUserByEmail(authenticationRequest.getEmail());
-		final String token = jwtTokenUtil.generateToken(user);
-		return ResponseEntity.ok(new JwtResponse(token));
-	}
 
 	// Get all users
 	@GetMapping("/users")

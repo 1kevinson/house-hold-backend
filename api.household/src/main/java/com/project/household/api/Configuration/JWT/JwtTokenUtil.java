@@ -7,8 +7,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.project.household.api.Entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,8 +24,8 @@ public class JwtTokenUtil implements Serializable {
 	@Value("${jwt.secret}")
 	private String secret;
 
-	// retrieve username from jwt token
-	public String getUsernameFromToken(String token) {
+	// retrieve email from jwt token
+	public String getEmailFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
@@ -50,9 +51,9 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	// generate token for user
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(User user) {
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.getUsername());
+		return doGenerateToken(claims, user.getUsername());
 	}
 
 	// while creating the token -
@@ -68,8 +69,8 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	// validate token
-	public Boolean validateToken(String token, UserDetails userDetails) {
-		final String username = getUsernameFromToken(token);
-		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	public Boolean validateToken(String token, User user) {
+		final String email = getEmailFromToken(token);
+		return (email.equals(user.getEmail()) && !isTokenExpired(token));
 	}
 }

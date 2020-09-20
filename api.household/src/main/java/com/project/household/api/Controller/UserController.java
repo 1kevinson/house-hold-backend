@@ -12,7 +12,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +37,6 @@ public class UserController {
 
 	@Autowired
 	private UserModelAssembler userModelAssembler;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	// Get all users
 	@GetMapping("/users")

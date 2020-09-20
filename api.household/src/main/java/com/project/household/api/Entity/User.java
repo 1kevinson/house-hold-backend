@@ -1,6 +1,5 @@
 package com.project.household.api.Entity;
 
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
@@ -15,15 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "USERS")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -34,7 +29,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		@JsonSubTypes.Type(value = Admin.class, name = "admin") })
 //Add this Annotation to avoid Hateaos recursion response
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "user_id")
-public abstract class User implements UserDetails {
+public abstract class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -131,36 +126,6 @@ public abstract class User implements UserDetails {
 
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return false;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		return null;
 	}
 
 	@Override

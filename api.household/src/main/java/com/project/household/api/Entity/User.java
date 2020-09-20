@@ -1,5 +1,6 @@
 package com.project.household.api.Entity;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -151,6 +153,16 @@ public abstract class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return false;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return null;
 	}
 
 	@Override

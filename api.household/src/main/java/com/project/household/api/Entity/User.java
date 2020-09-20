@@ -12,7 +12,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -39,6 +38,7 @@ public abstract class User {
 	private String lastName;
 	private String email;
 	private String password;
+	private String accountStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "house_id", nullable = true)
@@ -49,16 +49,6 @@ public abstract class User {
 
 	@OneToMany(mappedBy = "user")
 	private Set<Appointment> appointments;
-
-	@OneToMany(mappedBy = "owner")
-	private Set<House> houses;
-
-	@OneToMany(mappedBy = "owner")
-	private Set<Bill> bills;
-
-	@OneToOne
-	@JoinColumn(name = "room_id", referencedColumnName = "id")
-	private Room room;
 
 	// Default constructor
 	public User() {
@@ -74,14 +64,6 @@ public abstract class User {
 
 	public Set<Request> getRequests() {
 		return requests;
-	}
-
-	public Set<Bill> getBills() {
-		return bills;
-	}
-
-	public Set<House> getHouses() {
-		return houses;
 	}
 
 	public Set<Appointment> getAppointments() {
@@ -138,10 +120,18 @@ public abstract class User {
 		this.email = email;
 	}
 
+	public String getAccountStatus() {
+		return accountStatus;
+	}
+
+	public void setAccountStatus(String accountStatus) {
+		this.accountStatus = accountStatus;
+	}
+
 	@Override
 	public String toString() {
-		return "User { " + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName
-				+ '\'' + ", email='" + this.email + '\'' + ", password='" + this.password + '\'' + '}';
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", accountStatus=" + accountStatus + "]";
 	}
 
 }

@@ -21,8 +21,9 @@ public class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer number;
+	private String number;
 	private String bill_month;
+	private String content;
 	private Integer bill_year;
 	private Integer amount_due;
 	private Integer amount_paid;
@@ -40,12 +41,16 @@ public class Bill {
 	@JoinColumn(name = "owner_id", nullable = true)
 	private Owner owner;
 
+	@ManyToOne
+	@JoinColumn(name = "tenant_id", nullable = true)
+	private Tenant tenant;
+
 	// Default constructor
 	public Bill() {
 	}
 
 	// Parameters constructor
-	public Bill(Integer number, String bill_month, Integer bill_year, Integer amount_due, Integer amount_paid,
+	public Bill(String number, String bill_month, Integer bill_year, Integer amount_due, Integer amount_paid,
 			Integer amount_remain, String status, String place, Date date, String signature) {
 		this.number = number;
 		this.bill_month = bill_month;
@@ -59,6 +64,7 @@ public class Bill {
 		this.signature = signature;
 	}
 
+	// GETTERS AND SETTERS
 	public Integer getId() {
 		return id;
 	}
@@ -67,11 +73,11 @@ public class Bill {
 		this.id = id;
 	}
 
-	public Integer getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(Integer number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 
@@ -161,6 +167,22 @@ public class Bill {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+
+	public Tenant getTenant() {
+		return tenant;
+	}
+
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

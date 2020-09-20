@@ -1,11 +1,11 @@
 package com.project.household.api.Enumeration;
 
-public enum TenantStatus {
-	ACTIVE("ACTIVE"), INACTIVE("INACTIVE"), DEACTIVATED("DEACTIVATED"), UP_TO_DATE("UP TO DATE"), LATE("LATE");
+public enum UserAccountStatus {
+	VERIFIED("VERIFIED"), UNVERIFIED("UNVERIFIED");
 
 	private final String enumString;
 
-	TenantStatus(String string) {
+	UserAccountStatus(String string) {
 		this.enumString = string;
 	}
 

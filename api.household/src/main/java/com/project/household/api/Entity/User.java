@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -29,7 +31,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		@JsonSubTypes.Type(value = Admin.class, name = "admin") })
 //Add this Annotation to avoid Hateaos recursion response
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "user_id")
-public abstract class User {
+public abstract class User implements UserDetails {
+
+	// Default Serial ID
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -126,6 +131,26 @@ public abstract class User {
 
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
 	}
 
 	@Override

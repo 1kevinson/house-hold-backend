@@ -1,4 +1,4 @@
-package com.project.household.api.Configuration;
+package com.project.household.api.Configuration.JWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

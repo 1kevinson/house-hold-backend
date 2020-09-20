@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.household.api.Assembler.UserModelAssembler;
-import com.project.household.api.Configuration.JwtRequest;
-import com.project.household.api.Configuration.JwtResponse;
-import com.project.household.api.Configuration.JwtTokenUtil;
+import com.project.household.api.Configuration.JWT.JwtRequest;
+import com.project.household.api.Configuration.JWT.JwtResponse;
+import com.project.household.api.Configuration.JWT.JwtTokenUtil;
 import com.project.household.api.Entity.User;
 import com.project.household.api.Exception.NotFound.UserNotFoundException;
 import com.project.household.api.Repository.User.UserRepository;

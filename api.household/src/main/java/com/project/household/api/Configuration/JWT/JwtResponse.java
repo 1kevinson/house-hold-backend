@@ -1,4 +1,4 @@
-package com.project.household.api.Configuration;
+package com.project.household.api.Configuration.JWT;
 
 import java.io.Serializable;
 

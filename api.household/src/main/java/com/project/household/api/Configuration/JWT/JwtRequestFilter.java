@@ -1,4 +1,4 @@
-package com.project.household.api.Configuration;
+package com.project.household.api.Configuration.JWT;
 
 import java.io.IOException;
 
@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.project.household.api.Repository.User.UserRepository;
 import com.project.household.api.Services.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,6 +25,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
